@@ -1,0 +1,54 @@
+---
+- name: (USER) Ensure the package sudo and git are installed
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - sudo
+    - git
+
+- name: (USER) Modify PATH for all new future users
+  lineinfile:
+    path: /etc/skel/.bashrc
+    line: "{{ path_env }}"
+
+- name: (USER) Modify PATH for root
+  lineinfile:
+    path: /root/.bashrc
+    line: "{{ path_env }}"
+
+- name: (USER) Improve Nano syntax highlighting
+  git:
+    repo: https://github.com/scopatz/nanorc.git
+    dest: /usr/share/nano-syntax-highlighting
+    clone: yes
+    update: yes
+
+- name: (USER) Add new super user
+  user:
+    name: "{{ user }}"
+    password: "{{ password }}"
+    shell: /bin/bash
+    groups: sudo
+    append: yes
+    state: present
+    update_password: on_create
+
+- name: (USER) Add SSH key for new super user
+  authorized_key:
+    user: "{{ user }}"
+    key: "{{ lookup('file', item) }}"
+  with_items: "{{ public_key }}"
+
+- name: (USER) Modify PATH for new super user
+  lineinfile:
+    path: /home/{{ user }}/.bashrc
+    line: "{{ path_env }}"
+
+- name: (USER) Modify .nanorc for new super user
+  copy:
+    src: nanorc
+    dest: /home/{{ user }}/.nanorc
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0644

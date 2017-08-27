@@ -1,0 +1,10 @@
+---
+# Default variables for this role
+
+# Credentials for the new superuser
+user: myuser
+password: mypassword
+public_key: ~/.ssh/id_rsa.pub
+
+# PATH environment variable
+path_env: PATH="$PATH:/home/bin"
