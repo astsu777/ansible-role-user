@@ -25,7 +25,7 @@ Here is an example of variables:
 user: MyUser
 password: MyPassword
 public_key: ~/.ssh/id_rsa.pub
-path_env: PATH="Ã$PATH:/home/bin"
+path_env: PATH="$PATH:/home/bin"
 ```
 
 In the above example, the public SSH key provided is the one currently used by the user executing the Ansible playbook. If this does not suit your needs, feel free to modify this option.
