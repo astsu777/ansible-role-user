@@ -20,7 +20,7 @@
 - name: (USER) Improve Nano syntax highlighting
   git:
     repo: https://github.com/scopatz/nanorc.git
-    dest: /usr/share/nano-syntax-highlighting
+    dest: /usr/local/share/nano-syntax-highlighting
     clone: yes
     update: yes
 
