@@ -1,4 +1,16 @@
 ---
+## Role Variables
+- name: (USER) Set fact for Debian
+  set_fact:
+    sudo_group: "sudo"
+  when: ansible_os_family == "Debian"
+
+- name: (USER) Set fact for Debian
+  set_fact:
+    sudo_group: "wheel"
+  when: ansible_os_family == "RedHat"
+
+## Actions
 - name: (USER) Ensure the package sudo and git are installed
   package:
     name: "{{ item }}"
@@ -29,7 +41,7 @@
     name: "{{ user }}"
     password: "{{ password }}"
     shell: /bin/bash
-    groups: sudo
+    groups: "{{ sudo_group }}"
     append: yes
     state: present
     update_password: on_create
