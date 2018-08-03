@@ -5,7 +5,7 @@
     sudo_group: "sudo"
   when: ansible_os_family == "Debian"
 
-- name: (USER) Set fact for Debian
+- name: (USER) Set fact for Red Hat/CentOS
   set_fact:
     sudo_group: "wheel"
   when: ansible_os_family == "RedHat"
